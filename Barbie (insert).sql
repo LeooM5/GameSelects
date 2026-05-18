@@ -89,12 +89,22 @@ INSERT INTO objeto (nome, categoria, elegancia, disponivel, exclusivo, data_libe
 INSERT INTO personagem_objeto
 (fkPersonagem, fkObjeto, tipo_relacao)
 VALUES
-(1, 1, 'Proprietaria'),
-(1, 2, 'Proprietaria'),
-(4, 3, 'Compartilhado'),
-(5, 4, 'Compartilhado'),
-(5, 5, 'Compartilhado'),
-(2, 6, 'Exclusivo');
+(1, 1, 'Aquisição Exclusiva Internacional'),
+(1, 2, 'Coleção Privada Permanente'),
+(1, 7, 'Peça Principal de Gala'),
+(1, 15, 'Uso Reservado para Evento Beneficente'),
+(2, 6, 'Item Masculino Exclusivo'),
+(2, 12, 'Coleção Executiva Premium'),
+(2, 22, 'Calçado Formal Internacional'),
+(3, 4, 'Compartilhamento Familiar Autorizado'),
+(3, 10, 'Uso Cerimonial'),
+(3, 18, 'Acessório de Luxo Compartilhado'),
+(4, 3, 'Compartilhamento Temporário'),
+(4, 28, 'Item de Evento Social'),
+(4, 41, 'Coleção Elegance Edition'),
+(5, 5, 'Herança Familiar Exclusiva'),
+(5, 14, 'Acessório Premium Infantil'),
+(5, 33, 'Coleção Celestial Signature');
 
 -- RELAÇÃO EVENTO x OBJETO
 INSERT INTO evento_objeto
@@ -102,10 +112,24 @@ INSERT INTO evento_objeto
 VALUES
 (1, 1, 10),
 (1, 2, 9),
-(1, 3, 9),
+(1, 3, 8),
 (1, 4, 10),
 (1, 5, 9),
-(1, 6, 8);
+(1, 6, 8),
+(1, 7, 10),
+(1, 8, 8),
+(1, 9, 10),
+(1, 10, 9),
+(1, 11, 8),
+(1, 12, 9),
+(1, 13, 8),
+(1, 14, 10),
+(1, 15, 10),
+(1, 16, 9),
+(1, 17, 8),
+(1, 18, 9),
+(1, 19, 8),
+(1, 20, 10);
 
 -- RELAÇÃO PERSONAGEM x CLOSET
 INSERT INTO permissao_closet
@@ -114,8 +138,14 @@ VALUES
 (1,1),
 (1,2),
 (1,3),
+(1,4),
+(2,2),
+(2,4),
 (3,1),
+(3,3),
+(4,1),
 (4,2),
-(5,3);
+(5,3),
+(5,4);
 
 
