@@ -1,55 +1,115 @@
-
 -- QUESTÕES DIFÍCEIS
 
 -- 1
 
-SELECT 
+SELECT
     o.nome AS objeto,
     o.categoria,
     o.elegancia,
     c.nome AS closet,
-    p.nome AS personagem_relacionado,
+    p.nome AS personagem,
     e.nome AS evento,
     e.data_evento
 FROM objeto o
-INNER JOIN closet c
+JOIN closet c
     ON o.fkCloset = c.idCloset
-
-INNER JOIN personagem_objeto po
+JOIN personagem_objeto po
     ON o.idObjeto = po.fkObjeto
-
-INNER JOIN personagem p
+JOIN personagem p
     ON po.fkPersonagem = p.idPersonagem
-
-INNER JOIN evento_objeto eo
+JOIN evento_objeto eo
     ON o.idObjeto = eo.fkObjeto
-
-INNER JOIN evento e
+JOIN evento e
     ON eo.fkEvento = e.idEvento
+WHERE e.nome = 'Golden Prestige Dinner'
+AND o.disponivel = TRUE
+AND o.exclusivo = FALSE
+AND o.data_liberacao <= DATE(e.data_evento)
+AND o.elegancia >= e.dress_code_min
+AND p.nome IN (
+    'Barbie',
+    'Skipper Celestine',
+    'Stacie Aurora',
+    'Chelsea Elodie'
+)
+ORDER BY o.elegancia DESC
+LIMIT 3;
 
-INNER JOIN permissao_closet pc
-    ON c.idCloset = pc.fkCloset
+-- 2
 
-INNER JOIN personagem pb
-    ON pc.fkPersonagem = pb.idPersonagem
+SELECT
+    p.nome,
+    COUNT(o.idObjeto) AS total_objetos
+FROM personagem p
+JOIN personagem_objeto po
+    ON p.idPersonagem = po.fkPersonagem
+JOIN objeto o
+    ON po.fkObjeto = o.idObjeto
+JOIN evento_objeto eo
+    ON o.idObjeto = eo.fkObjeto
+JOIN evento e
+    ON eo.fkEvento = e.idEvento
+WHERE e.nome = 'Golden Prestige Dinner'
+AND o.disponivel = TRUE
+AND o.exclusivo = FALSE
+AND o.elegancia >= e.dress_code_min
+GROUP BY p.nome
+HAVING COUNT(o.idObjeto) > 1
+ORDER BY total_objetos DESC;
 
-WHERE 
-    pb.nome = 'Barbie'
+-- 3
+
+SELECT
+    c.nome,
+    COUNT(o.idObjeto) AS total_objetos
+FROM closet c
+JOIN objeto o
+    ON c.idCloset = o.fkCloset
+JOIN evento_objeto eo
+    ON o.idObjeto = eo.fkObjeto
+JOIN evento e
+    ON eo.fkEvento = e.idEvento
+WHERE e.nome = 'Golden Prestige Dinner'
+AND o.disponivel = TRUE
+AND o.exclusivo = FALSE
+AND o.data_liberacao <= DATE(e.data_evento)
+AND o.elegancia >= e.dress_code_min
+GROUP BY c.nome
+HAVING COUNT(o.idObjeto) > 2;
+
+-- 4
+
+SELECT nome
+FROM closet
+WHERE tipo_acesso = 'Premium'
+AND idCloset NOT IN (
+    SELECT o.fkCloset
+    FROM objeto o
+    JOIN evento_objeto eo
+        ON o.idObjeto = eo.fkObjeto
+    JOIN evento e
+        ON eo.fkEvento = e.idEvento
+    WHERE e.nome = 'Golden Prestige Dinner'
     AND o.disponivel = TRUE
     AND o.exclusivo = FALSE
     AND o.data_liberacao <= DATE(e.data_evento)
     AND o.elegancia >= e.dress_code_min
-    AND p.nome IN (
-        'Barbie',
-        'Skipper Celestine',
-        'Stacie Aurora',
-        'Chelsea Elodie'
-    )
-    AND e.nome = 'Golden Prestige Dinner'
+);
 
-ORDER BY 
+-- 5
+
+SELECT
     o.categoria,
-    o.elegancia DESC;
-    
--- 2
-
+    COUNT(o.idObjeto) AS total_objetos
+FROM objeto o
+JOIN evento_objeto eo
+    ON o.idObjeto = eo.fkObjeto
+JOIN evento e
+    ON eo.fkEvento = e.idEvento
+WHERE e.nome = 'Golden Prestige Dinner'
+AND o.disponivel = TRUE
+AND o.exclusivo = FALSE
+AND o.elegancia >= e.dress_code_min
+GROUP BY o.categoria
+HAVING COUNT(o.idObjeto) > 3
+ORDER BY total_objetos DESC;
