@@ -90,7 +90,7 @@ AND elegancia >= 8;
 -- 2
 
 SELECT * FROM objeto
-WHERE YEAR(data_liberacao) > '2025'
+WHERE data_liberacao > '2026-05-10'
 ORDER BY elegancia DESC;
 
 -- 3
@@ -101,10 +101,7 @@ AND tipo_acesso = 'Compartilhado';
 
 -- 4
 
-SELECT * FROM objeto
-WHERE categoria = 'Acessório'
-AND disponivel = 1
-AND elegancia >= 8;
+
 
 -- 5
 
@@ -140,4 +137,3 @@ WHERE exclusivo = 1
 AND elegancia > 8
 AND ( categoria = 'Vestido'
 OR categoria = 'Sapato' );
-
