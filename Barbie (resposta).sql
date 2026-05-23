@@ -77,3 +77,67 @@ AND o.elegancia >= e.dress_code_min
 GROUP BY o.categoria
 HAVING COUNT(o.idObjeto) > 3
 ORDER BY total_objetos DESC;
+
+-- Questões fáceis 
+
+-- 1
+
+SELECT * FROM objeto
+WHERE categoria = 'Acessório'
+AND disponivel = 1
+AND elegancia >= 8;
+
+-- 2
+
+SELECT * FROM objeto
+WHERE YEAR(data_liberacao) > '2025'
+ORDER BY elegancia DESC;
+
+-- 3
+
+SELECT * FROM closet
+WHERE nome LIKE '%Aurora%'
+AND tipo_acesso = 'Compartilhado';
+
+-- 4
+
+SELECT * FROM objeto
+WHERE categoria = 'Acessório'
+AND disponivel = 1
+AND elegancia >= 8;
+
+-- 5
+
+SELECT * FROM objeto
+WHERE disponivel = 1
+AND elegancia >= 8
+AND exclusivo = 0
+AND ( nome LIKE '%Royal%'
+OR nome LIKE '%Lumiere%')
+ORDER BY elegancia DESC;
+
+-- 6
+
+SELECT * FROM objeto
+WHERE exclusivo = 0
+AND disponivel = 1
+AND ( categoria = 'Bolsa'
+OR categoria = 'Sapato'
+OR categoria = 'Acessório' )
+ORDER BY categoria ASC, elegancia DESC;
+
+-- 7
+
+SELECT * FROM objeto
+WHERE exclusivo = 0
+AND ( disponivel = 0
+OR elegancia < 6 );
+
+-- 8
+
+SELECT * FROM objeto
+WHERE exclusivo = 1
+AND elegancia > 8
+AND ( categoria = 'Vestido'
+OR categoria = 'Sapato' );
+
