@@ -1,3 +1,143 @@
+-- Questões fáceis 
+
+-- 1
+
+SELECT * FROM objeto
+WHERE categoria = 'Acessório'
+AND disponivel = 1
+AND elegancia >= 8;
+
+-- 2
+
+SELECT * FROM objeto
+WHERE data_liberacao > '2026-05-10'
+ORDER BY elegancia DESC;
+
+-- 3
+
+SELECT * FROM closet
+WHERE nome LIKE '%Aurora%'
+AND tipo_acesso = 'Compartilhado';
+
+-- 4
+
+
+
+-- 5
+
+SELECT * FROM objeto
+WHERE disponivel = 1
+AND elegancia >= 8
+AND exclusivo = 0
+AND ( nome LIKE '%Royal%'
+OR nome LIKE '%Lumiere%')
+ORDER BY elegancia DESC;
+
+-- 6
+
+SELECT * FROM objeto
+WHERE exclusivo = 0
+AND disponivel = 1
+AND ( categoria = 'Bolsa'
+OR categoria = 'Sapato'
+OR categoria = 'Acessório' )
+ORDER BY categoria ASC, elegancia DESC;
+
+-- 7
+
+SELECT * FROM objeto
+WHERE exclusivo = 0
+AND ( disponivel = 0
+OR elegancia < 6 );
+
+-- 8
+
+SELECT * FROM objeto
+WHERE exclusivo = 1
+AND elegancia > 8
+AND ( categoria = 'Vestido'
+OR categoria = 'Sapato' );
+
+
+
+
+
+
+
+
+-- QUESTÕES MÉDIAS
+
+-- 1
+
+SELECT 
+    CONCAT('O item ', objeto.nome, ' está guardado no ', closet.nome) AS localizacao
+FROM objeto
+JOIN closet ON objeto.fkCloset = closet.idCloset;
+
+-- 2
+
+SELECT 
+    p.nome AS nome_personagem,
+    CASE 
+        WHEN o.nome IS NULL THEN 'Nenhum item equipado'
+        ELSE CONCAT('Equipado com: ', o.nome)
+    END AS status_inventario
+FROM personagem p
+LEFT JOIN personagem_objeto po ON p.idPersonagem = po.fkPersonagem
+LEFT JOIN objeto o ON po.fkObjeto = o.idObjeto;
+
+-- 3
+
+SELECT 
+    o.nome AS nome_objeto,
+    IFNULL(po.tipo_relacao, 'Disponível para Uso') AS relacao_final
+FROM objeto o
+LEFT JOIN personagem_objeto po ON o.idObjeto = po.fkObjeto;
+
+-- 4
+
+SELECT 
+    o.nome AS nome_objeto,
+    CASE 
+        WHEN (eo.compatibilidade + o.elegancia) >= 18 THEN 'Combinação Perfeita'
+        WHEN (eo.compatibilidade + o.elegancia) = 17 THEN 'Combinação Ok'
+        ELSE 'Trocar de Roupa'
+    END AS status_harmonia
+FROM evento_objeto eo
+JOIN objeto o ON eo.fkObjeto = o.idObjeto;
+
+-- 5
+
+SELECT 
+    c.nome AS nome_closet,
+    IFNULL(CONCAT('Acesso liberado para: ', p.nome), 'Sem usuários permitidos') AS status_acesso
+FROM permissao_closet pc
+JOIN closet c ON pc.fkCloset = c.idCloset
+LEFT JOIN personagem p ON pc.fkPersonagem = p.idPersonagem;
+
+-- 6
+
+
+
+-- 7
+
+
+
+-- 8
+
+
+
+-- 9
+
+
+
+-- 10
+
+
+
+
+
+
 -- QUESTÕES DIFÍCEIS
 
 -- 1
@@ -77,63 +217,3 @@ AND o.elegancia >= e.dress_code_min
 GROUP BY o.categoria
 HAVING COUNT(o.idObjeto) > 3
 ORDER BY total_objetos DESC;
-
--- Questões fáceis 
-
--- 1
-
-SELECT * FROM objeto
-WHERE categoria = 'Acessório'
-AND disponivel = 1
-AND elegancia >= 8;
-
--- 2
-
-SELECT * FROM objeto
-WHERE data_liberacao > '2026-05-10'
-ORDER BY elegancia DESC;
-
--- 3
-
-SELECT * FROM closet
-WHERE nome LIKE '%Aurora%'
-AND tipo_acesso = 'Compartilhado';
-
--- 4
-
-
-
--- 5
-
-SELECT * FROM objeto
-WHERE disponivel = 1
-AND elegancia >= 8
-AND exclusivo = 0
-AND ( nome LIKE '%Royal%'
-OR nome LIKE '%Lumiere%')
-ORDER BY elegancia DESC;
-
--- 6
-
-SELECT * FROM objeto
-WHERE exclusivo = 0
-AND disponivel = 1
-AND ( categoria = 'Bolsa'
-OR categoria = 'Sapato'
-OR categoria = 'Acessório' )
-ORDER BY categoria ASC, elegancia DESC;
-
--- 7
-
-SELECT * FROM objeto
-WHERE exclusivo = 0
-AND ( disponivel = 0
-OR elegancia < 6 );
-
--- 8
-
-SELECT * FROM objeto
-WHERE exclusivo = 1
-AND elegancia > 8
-AND ( categoria = 'Vestido'
-OR categoria = 'Sapato' );
