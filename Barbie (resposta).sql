@@ -117,23 +117,57 @@ LEFT JOIN personagem p ON pc.fkPersonagem = p.idPersonagem;
 
 -- 6
 
-
+SELECT personagem.nome, COUNT(personagem_objeto.fkObjeto) AS total_objetos,
+CASE WHEN COUNT(personagem_objeto.fkObjeto) >= 3 THEN 'Muito Estilosa'
+WHEN COUNT(personagem_objeto.fkObjeto) = 2 THEN 'Bem Vestida'
+ELSE 'Está na hora de fazer umas compras!' END AS classificacao
+FROM personagem JOIN personagem_objeto 
+ON personagem.idPersonagem = personagem_objeto.fkPersonagem
+GROUP BY personagem.nome;
 
 -- 7
 
-
+SELECT closet.nome, COUNT(objeto.idObjeto) AS total_objetos,
+CASE
+WHEN COUNT(objeto.idObjeto) >= 5 THEN 'Closet Lotado'
+WHEN COUNT(objeto.idObjeto) BETWEEN 3 AND 4 THEN 'Closet Organizado'
+ELSE 'Poucos Itens'
+END AS status_closet
+FROM closet JOIN objeto
+ON closet.idCloset = objeto.fkCloset
+GROUP BY closet.nome;
 
 -- 8
 
-
+SELECT objeto.nome,
+CONCAT(
+'Compatibilidade total: ',
+(evento_objeto.compatibilidade + objeto.elegancia)
+) AS resultado_final
+FROM objeto JOIN evento_objeto
+ON objeto.idObjeto = evento_objeto.fkObjeto;
 
 -- 9
 
-
+SELECT objeto.nome, closet.nome,
+CASE
+WHEN objeto.exclusivo = 1 THEN 'Item Exclusivo'
+ELSE 'Item Comum'
+END AS raridade
+FROM objeto JOIN closet
+ON objeto.fkCloset = closet.idCloset;
 
 -- 10
 
-
+SELECT personagem.nome,
+CONCAT(
+'Dona/dono do objeto: ',
+objeto.nome
+) AS relacao_objeto
+FROM personagem JOIN personagem_objeto
+ON personagem.idPersonagem = personagem_objeto.fkPersonagem
+JOIN objeto
+ON personagem_objeto.fkObjeto = objeto.idObjeto;
 
 
 
