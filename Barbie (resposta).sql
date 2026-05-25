@@ -21,7 +21,9 @@ AND tipo_acesso = 'Compartilhado';
 
 -- 4
 
-
+SELECT * FROM evento
+WHERE dress_code_min >= 8
+ORDER BY data_evento ASC;
 
 -- 5
 
@@ -58,9 +60,43 @@ AND elegancia > 8
 AND ( categoria = 'Vestido'
 OR categoria = 'Sapato' );
 
+-- 9
 
+SELECT * FROM personagem
+WHERE tipo = 'Irmã';
 
+-- 10
 
+SELECT * FROM objeto
+WHERE data_liberacao BETWEEN '2026-01-01' AND '2026-12-31';
+
+-- 11
+
+SELECT * FROM objeto
+WHERE disponivel = 0
+AND exclusivo = 1;
+
+-- 12
+
+SELECT * FROM objeto
+WHERE elegancia >= 9
+AND disponivel = 1
+ORDER BY elegancia DESC;
+
+-- 13
+
+SELECT * FROM objeto
+WHERE exclusivo != 1;
+
+-- 14
+
+SELECT * FROM personagem
+ORDER BY nome ASC;
+
+-- 15
+
+SELECT * FROM objeto
+WHERE elegancia <= 3;
 
 
 
